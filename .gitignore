@@ -2,3 +2,4 @@
 /dist
 .wakatime-project
 .env
+.env.test
