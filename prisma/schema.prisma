@@ -28,9 +28,10 @@ model Category {
 }
 
 model Term {
-  id        Int      @id @default(autoincrement())
-  number    Int      @unique
-  createdAt DateTime @default(now())
+  id         Int          @id @default(autoincrement())
+  number     Int          @unique
+  createdAt  DateTime     @default(now())
+  Discipline Discipline[]
 
   @@map("terms")
 }
@@ -41,4 +42,14 @@ model Teacher {
   createdAt DateTime @default(now())
 
   @@map("teachers")
+}
+
+model Discipline {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  term      Term     @relation(fields: [termId], references: [id])
+  termId    Int
+  createdAt DateTime @default(now())
+
+  @@map("disciplines")
 }
