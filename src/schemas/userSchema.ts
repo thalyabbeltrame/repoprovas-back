@@ -14,7 +14,7 @@ export const signUpSchema = Joi.object({
 });
 
 export const loginSchema = Joi.object({
-  email: Joi.string().email().required().messages({
+  email: Joi.string().email().trim().required().messages({
     'string.email': 'Invalid email',
     'string.empty': 'Email is required',
   }),

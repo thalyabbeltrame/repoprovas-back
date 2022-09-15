@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { userController } from '../controllers/userController';
 import { validateSchema } from '../middlewares/schemaValidationMiddleware';
-import { signUpSchema } from '../schemas/userSchema';
+import { loginSchema, signUpSchema } from '../schemas/userSchema';
 
 export const userRouter = Router();
 
@@ -11,3 +11,4 @@ userRouter.post(
   validateSchema(signUpSchema),
   userController.createUser
 );
+userRouter.post('/login', validateSchema(loginSchema), userController.login);
