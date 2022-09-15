@@ -34,3 +34,11 @@ model Term {
 
   @@map("terms")
 }
+
+model Teacher {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("teachers")
+}
