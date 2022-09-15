@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "test": "NODE_ENV=test npx prisma migrate dev && jest --no-cache",
+    "test": "NODE_ENV=test npx prisma migrate dev && npx prisma db seed && jest --no-cache",
     "build": "npx tsc",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts",
     "start": "node ./dist/server.js"

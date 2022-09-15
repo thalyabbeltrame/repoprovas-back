@@ -28,7 +28,7 @@ const disciplines = [
   { name: 'Autoconfiança', termId: 6 },
 ];
 
-const disciplinesTeachers = [
+const teachersDisciplines = [
   { teacherId: 1, disciplineId: 1 },
   { teacherId: 1, disciplineId: 2 },
   { teacherId: 1, disciplineId: 3 },
@@ -42,7 +42,7 @@ async function main() {
   await prisma.category.createMany({ data: categories });
   await prisma.teacher.createMany({ data: teachers });
   await prisma.discipline.createMany({ data: disciplines });
-  await prisma.disciplineTeacher.createMany({ data: disciplinesTeachers });
+  await prisma.teacherDiscipline.createMany({ data: teachersDisciplines });
 }
 
 main()
