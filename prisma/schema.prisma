@@ -18,3 +18,11 @@ model User {
 
   @@map("users")
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("categories")
+}

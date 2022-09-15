@@ -2,10 +2,10 @@
   "name": "projeto20-repoprovas",
   "version": "1.0.0",
   "description": "",
-  "main": ".src/server.js",
+  "main": "./src/server.js",
   "scripts": {
     "test": "NODE_ENV=test npx prisma migrate dev && jest --no-cache",
-    "build": "npx tsc && npx prisma generate && npx prisma migrate deploy",
+    "build": "npx tsc",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts",
     "start": "node ./dist/server.js"
   },
@@ -42,7 +42,11 @@
     "prisma": "^4.3.1",
     "supertest": "^6.2.4",
     "ts-jest": "^29.0.1",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.3"
+  },
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
   }
 }
