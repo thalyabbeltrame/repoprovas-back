@@ -26,3 +26,11 @@ model Category {
 
   @@map("categories")
 }
+
+model Term {
+  id        Int      @id @default(autoincrement())
+  number    Int      @unique
+  createdAt DateTime @default(now())
+
+  @@map("terms")
+}
