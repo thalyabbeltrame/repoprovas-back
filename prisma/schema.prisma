@@ -61,6 +61,7 @@ model TeacherDiscipline {
   id           Int        @id @default(autoincrement())
   teacherId    Int
   disciplineId Int
+  createdAt    DateTime   @default(now())
   teacher      Teacher    @relation(fields: [teacherId], references: [id])
   discipline   Discipline @relation(fields: [disciplineId], references: [id])
   Test         Test[]
@@ -74,6 +75,7 @@ model Test {
   pdfUrl              String
   categoryId          Int
   teacherDisciplineId Int
+  createdAt           DateTime          @default(now())
   category            Category          @relation(fields: [categoryId], references: [id])
   teacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
 

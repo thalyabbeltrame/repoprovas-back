@@ -1,11 +1,12 @@
 import Joi from 'joi';
 
-export const signUpSchema = Joi.object({
+const signUp = Joi.object({
   email: Joi.string().email().trim().required().messages({
+    'any.required': 'Email is required',
     'string.email': 'Invalid email',
-    'string.empty': 'Email is required',
   }),
   password: Joi.string().trim().required().messages({
+    'any.required': 'Password is required',
     'string.empty': 'Password is required',
   }),
   confirmPassword: Joi.string().required().valid(Joi.ref('password')).messages({
@@ -13,12 +14,18 @@ export const signUpSchema = Joi.object({
   }),
 });
 
-export const loginSchema = Joi.object({
+const login = Joi.object({
   email: Joi.string().email().trim().required().messages({
+    'any.required': 'Email is required',
     'string.email': 'Invalid email',
-    'string.empty': 'Email is required',
   }),
   password: Joi.string().trim().required().messages({
+    'any.required': 'Password is required',
     'string.empty': 'Password is required',
   }),
 });
+
+export const userSchemas = {
+  signUp,
+  login,
+};
