@@ -17,10 +17,15 @@ const create = Joi.object({
     'number.base': 'Category ID must be a number',
     'number.integer': 'Category ID must be an integer',
   }),
-  teacherDisciplineId: Joi.number().integer().required().messages({
-    'any.required': 'Teacher Discipline ID is required',
-    'number.base': 'Teacher Discipline ID must be a number',
-    'number.integer': 'Teacher Discipline ID must be an integer',
+  teacherId: Joi.number().integer().required().messages({
+    'any.required': 'Teacher ID is required',
+    'number.base': 'Teacher ID must be a number',
+    'number.integer': 'Teacher ID must be an integer',
+  }),
+  disciplineId: Joi.number().integer().required().messages({
+    'any.required': 'Discipline ID is required',
+    'number.base': 'Discipline ID must be a number',
+    'number.integer': 'Discipline ID must be an integer',
   }),
 });
 

@@ -2,8 +2,8 @@ import { UserRequestDTO } from '../dtos/UserRequestDTO';
 import { bcryptUtils } from '../utils/bcryptUtils';
 
 export class User {
-  public email: string;
-  public password: string;
+  readonly email: string;
+  readonly password: string;
 
   constructor(props: UserRequestDTO) {
     this.email = props.email;

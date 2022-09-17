@@ -2,14 +2,18 @@ import { TeacherDiscipline } from '@prisma/client';
 
 import { prisma } from '../config/prisma';
 
-async function findById(id: number): Promise<TeacherDiscipline | null> {
-  return await prisma.teacherDiscipline.findUnique({
+async function findByTeacherIdAndDisciplineId(
+  teacherId: number,
+  disciplineId: number
+): Promise<TeacherDiscipline | null> {
+  return await prisma.teacherDiscipline.findFirst({
     where: {
-      id,
+      teacherId,
+      disciplineId,
     },
   });
 }
 
 export const teacherDisciplineRepository = {
-  findById,
+  findByTeacherIdAndDisciplineId,
 };

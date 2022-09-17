@@ -1,8 +1,8 @@
 import { prisma } from '../config/prisma';
 
-import { TestRequestDTO } from '../dtos/TestRequestDTO';
+import { InsertTestDTO } from '../dtos/TestRequestDTO';
 
-async function create(data: TestRequestDTO): Promise<void> {
+async function create(data: InsertTestDTO): Promise<void> {
   await prisma.test.create({
     data,
   });
