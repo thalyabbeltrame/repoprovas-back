@@ -23,36 +23,36 @@ model Category {
   id        Int      @id @default(autoincrement())
   name      String   @unique
   createdAt DateTime @default(now())
-  Test      Test[]
+  tests     Test[]
 
   @@map("categories")
 }
 
 model Term {
-  id         Int          @id @default(autoincrement())
-  number     Int          @unique
-  createdAt  DateTime     @default(now())
-  Discipline Discipline[]
+  id          Int          @id @default(autoincrement())
+  number      Int          @unique
+  createdAt   DateTime     @default(now())
+  disciplines Discipline[]
 
   @@map("terms")
 }
 
 model Teacher {
-  id                Int                 @id @default(autoincrement())
-  name              String              @unique
-  createdAt         DateTime            @default(now())
-  TeacherDiscipline TeacherDiscipline[]
+  id                  Int                 @id @default(autoincrement())
+  name                String              @unique
+  createdAt           DateTime            @default(now())
+  teachersDisciplines TeacherDiscipline[]
 
   @@map("teachers")
 }
 
 model Discipline {
-  id                Int                 @id @default(autoincrement())
-  name              String              @unique
-  termId            Int
-  createdAt         DateTime            @default(now())
-  term              Term                @relation(fields: [termId], references: [id])
-  TeacherDiscipline TeacherDiscipline[]
+  id                  Int                 @id @default(autoincrement())
+  name                String              @unique
+  termId              Int
+  createdAt           DateTime            @default(now())
+  term                Term                @relation(fields: [termId], references: [id])
+  teachersDisciplines TeacherDiscipline[]
 
   @@map("disciplines")
 }
@@ -64,7 +64,7 @@ model TeacherDiscipline {
   createdAt    DateTime   @default(now())
   teacher      Teacher    @relation(fields: [teacherId], references: [id])
   discipline   Discipline @relation(fields: [disciplineId], references: [id])
-  Test         Test[]
+  tests        Test[]
 
   @@map("teachersDisciplines")
 }

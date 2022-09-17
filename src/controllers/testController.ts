@@ -19,6 +19,15 @@ async function createTest(req: Request, res: Response) {
   res.status(201).send('Test created');
 }
 
+async function getTestsByDiscipline(_req: Request, res: Response) {
+  const userId = Number(res.locals.userId) || 0;
+
+  const tests = await testService.getTestsByDiscipline(userId);
+
+  res.status(200).send(tests);
+}
+
 export const testController = {
   createTest,
+  getTestsByDiscipline,
 };

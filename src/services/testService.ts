@@ -1,9 +1,9 @@
 import { TestRequestDTO } from '../dtos/TestRequestDTO';
+import { Test } from '../entities/Test';
 import { testRepository } from '../repositories/testRepository';
 import { authService } from './authService';
 import { categoryService } from './categoryService';
 import { teacherDisciplineService } from './teacherDisciplineService';
-import { Test } from '../entities/Test';
 
 async function createTest(userId: number, test: TestRequestDTO) {
   await authService.validateUserId(userId);
@@ -24,6 +24,12 @@ async function createTest(userId: number, test: TestRequestDTO) {
   await testRepository.create(newTest);
 }
 
+async function getTestsByDiscipline(userId: number) {
+  await authService.validateUserId(userId);
+  return await testRepository.getByDisciplines();
+}
+
 export const testService = {
   createTest,
+  getTestsByDiscipline,
 };

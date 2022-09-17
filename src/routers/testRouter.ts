@@ -7,9 +7,11 @@ import { testSchemas } from '../schemas/testSchemas';
 
 export const testRouter = Router();
 
+testRouter.use(validateToken);
+
 testRouter.post(
   '/create',
-  validateToken,
   validateSchema(testSchemas.create),
   testController.createTest
 );
+testRouter.get('/by-disciplines', testController.getTestsByDiscipline);
