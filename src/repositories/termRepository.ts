@@ -1,6 +1,11 @@
 import { prisma } from '../config/prisma';
 
-async function findAll(): Promise<any> {
+export interface ITerm {
+  id: number;
+  number: number;
+}
+
+async function findAll(): Promise<ITerm[]> {
   return await prisma.term.findMany({
     select: {
       id: true,

@@ -1,10 +1,15 @@
 import { TestRequestDTO } from '../dtos/TestRequestDTO';
 import { Test } from '../entities/Test';
-import { testRepository } from '../repositories/testRepository';
+import { ICategory } from '../repositories/categoryRepository';
+import { IDiscipline } from '../repositories/disciplinesRespository';
+import { ITeacher } from '../repositories/teachersRepository';
+import { ITerm } from '../repositories/termRepository';
+import { ITest, testRepository } from '../repositories/testRepository';
 import { authService } from './authService';
 import { categoryService } from './categoryService';
 import { disciplineService } from './disciplineService';
 import { teacherDisciplineService } from './teacherDisciplineService';
+import { teacherService } from './teacherService';
 import { termService } from './termService';
 
 async function createTest(userId: number, test: TestRequestDTO) {
@@ -37,15 +42,73 @@ async function getTestsByDiscipline(userId: number) {
   return getTestsByDisciplinesAndTerms(terms, disciplines, categories, tests);
 }
 
-async function getTestsByDisciplinesAndTerms(
-  terms: any[],
-  disciplines: any[],
-  categories: any[],
-  tests: any[]
+async function getTestsByTeacher(userId: number) {
+  await authService.validateUserId(userId);
+
+  const terms = await termService.getTerms();
+  const teachers = await teacherService.getTeachers();
+  const categories = await categoryService.getCategories();
+  const tests = await testRepository.getTests();
+
+  return getTestsByTeachers(terms, teachers, categories, tests);
+}
+
+async function getTestsByTeachers(
+  terms: ITerm[],
+  teachers: ITeacher[],
+  categories: ICategory[],
+  tests: ITest[]
 ) {
   const categoryHashTable: { [key: number]: any } = {};
   for (let i = 0; i < categories.length; i++) {
     categoryHashTable[categories[i].id] = {
+      id: categories[i].id,
+      name: categories[i].name,
+      tests: {},
+    };
+  }
+
+  const teacherHashTable: { [key: number]: any } = {};
+  for (let i = 0; i < teachers.length; i++) {
+    teacherHashTable[teachers[i].id] = {
+      id: teachers[i].id,
+      name: teachers[i].name,
+      categories: JSON.parse(JSON.stringify(categoryHashTable)),
+    };
+  }
+
+  const testHashTable: { [key: number]: any } = {};
+  for (let i = 0; i < tests.length; i++) {
+    testHashTable[tests[i].id] = {
+      id: tests[i].id,
+      name: tests[i].name,
+      pdfUrl: tests[i].pdfUrl,
+      disciplineId: tests[i].teacherDiscipline.discipline.id,
+      disciplineName: tests[i].teacherDiscipline.discipline.name,
+      categoryId: tests[i].categoryId,
+      teacherId: tests[i].teacherDiscipline.teacher.id,
+    };
+  }
+
+  for (const testId in testHashTable) {
+    const test = testHashTable[testId];
+    const { teacherId, categoryId } = test;
+    teacherHashTable[teacherId].categories[categoryId].tests[testId] = test;
+  }
+
+  return teacherHashTable;
+}
+
+async function getTestsByDisciplinesAndTerms(
+  terms: ITerm[],
+  disciplines: IDiscipline[],
+  categories: ICategory[],
+  tests: ITest[]
+) {
+  const categoryHashTable: { [key: number]: any } = {};
+  for (let i = 0; i < categories.length; i++) {
+    categoryHashTable[categories[i].id] = {
+      id: categories[i].id,
       name: categories[i].name,
       tests: {},
     };
@@ -54,6 +117,7 @@ async function getTestsByDisciplinesAndTerms(
   const disciplineHashTable: { [key: number]: any } = {};
   for (let i = 0; i < disciplines.length; i++) {
     disciplineHashTable[disciplines[i].id] = {
+      id: disciplines[i].id,
       name: disciplines[i].name,
       termId: disciplines[i].termId,
       categories: JSON.parse(JSON.stringify(categoryHashTable)),
@@ -63,6 +127,7 @@ async function getTestsByDisciplinesAndTerms(
   const testHashTable: { [key: number]: any } = {};
   for (let i = 0; i < tests.length; i++) {
     testHashTable[tests[i].id] = {
+      id: tests[i].id,
       name: tests[i].name,
       pdfUrl: tests[i].pdfUrl,
       disciplineId: tests[i].teacherDiscipline.discipline.id,
@@ -76,6 +141,7 @@ async function getTestsByDisciplinesAndTerms(
     const test = testHashTable[testId];
     const { disciplineId, categoryId } = test;
     disciplineHashTable[disciplineId].categories[categoryId].tests[testId] = {
+      id: test.id,
       name: test.name,
       pdfUrl: test.pdfUrl,
       teacherId: test.teacherId,
@@ -86,6 +152,7 @@ async function getTestsByDisciplinesAndTerms(
   const termHashTable: { [key: number]: any } = {};
   for (let i = 0; i < terms.length; i++) {
     termHashTable[terms[i].id] = {
+      id: terms[i].id,
       number: terms[i].number,
       disciplines: {},
     };
@@ -105,4 +172,5 @@ async function getTestsByDisciplinesAndTerms(
 export const testService = {
   createTest,
   getTestsByDiscipline,
+  getTestsByTeacher,
 };

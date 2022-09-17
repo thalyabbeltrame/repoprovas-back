@@ -15,3 +15,4 @@ testRouter.post(
   testController.createTest
 );
 testRouter.get('/by-disciplines', testController.getTestsByDiscipline);
+testRouter.get('/by-teachers', testController.getTestsByTeacher);

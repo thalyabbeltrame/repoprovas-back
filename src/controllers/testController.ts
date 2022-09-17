@@ -27,7 +27,16 @@ async function getTestsByDiscipline(_req: Request, res: Response) {
   res.status(200).send(tests);
 }
 
+async function getTestsByTeacher(_req: Request, res: Response) {
+  const userId = Number(res.locals.userId) || 0;
+
+  const tests = await testService.getTestsByTeacher(userId);
+
+  res.status(200).send(tests);
+}
+
 export const testController = {
   createTest,
   getTestsByDiscipline,
+  getTestsByTeacher,
 };
