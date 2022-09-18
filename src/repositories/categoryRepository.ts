@@ -10,6 +10,19 @@ async function findById(id: number): Promise<Category | null> {
   });
 }
 
+async function findAll(): Promise<Category[] | []> {
+  return await prisma.category.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      id: 'asc',
+    },
+  });
+}
+
 export const categoryRepository = {
   findById,
+  findAll,
 };

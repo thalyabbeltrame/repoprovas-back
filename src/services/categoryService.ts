@@ -1,3 +1,5 @@
+import { Category } from '@prisma/client';
+
 import { categoryRepository } from '../repositories/categoryRepository';
 import { AppError } from '../utils/AppError';
 
@@ -8,6 +10,12 @@ async function validateCategoryId(id: number): Promise<void> {
   }
 }
 
+async function findAll(): Promise<Category[]> {
+  const categories = await categoryRepository.findAll();
+  return categories;
+}
+
 export const categoryService = {
   validateCategoryId,
+  findAll,
 };

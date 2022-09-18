@@ -12,7 +12,7 @@ testRouter.use(validateToken);
 testRouter.post(
   '/create',
   validateSchema(testSchemas.create),
-  testController.createTest
+  testController.create
 );
-testRouter.get('/by-disciplines', testController.getTestsByDisciplines);
-testRouter.get('/by-teachers', testController.getTestsByTeachers);
+testRouter.get('/by-disciplines', testController.getByDisciplines);
+testRouter.get('/by-teachers', testController.getByTeachers);
