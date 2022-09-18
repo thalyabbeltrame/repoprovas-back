@@ -19,24 +19,24 @@ async function createTest(req: Request, res: Response) {
   res.status(201).send('Test created');
 }
 
-async function getTestsByDiscipline(_req: Request, res: Response) {
+async function getTestsByDisciplines(_req: Request, res: Response) {
   const userId = Number(res.locals.userId) || 0;
 
-  const tests = await testService.getTestsByDiscipline(userId);
+  const tests = await testService.getTestsByDisciplines(userId);
 
   res.status(200).send(tests);
 }
 
-async function getTestsByTeacher(_req: Request, res: Response) {
+async function getTestsByTeachers(_req: Request, res: Response) {
   const userId = Number(res.locals.userId) || 0;
 
-  const tests = await testService.getTestsByTeacher(userId);
+  const tests = await testService.getTestsByTeachers(userId);
 
   res.status(200).send(tests);
 }
 
 export const testController = {
   createTest,
-  getTestsByDiscipline,
-  getTestsByTeacher,
+  getTestsByDisciplines,
+  getTestsByTeachers,
 };

@@ -8,11 +8,6 @@ async function validateCategoryId(id: number): Promise<void> {
   }
 }
 
-async function getCategories() {
-  return await categoryRepository.findAll();
-}
-
 export const categoryService = {
   validateCategoryId,
-  getCategories,
 };

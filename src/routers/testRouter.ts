@@ -14,5 +14,5 @@ testRouter.post(
   validateSchema(testSchemas.create),
   testController.createTest
 );
-testRouter.get('/by-disciplines', testController.getTestsByDiscipline);
-testRouter.get('/by-teachers', testController.getTestsByTeacher);
+testRouter.get('/by-disciplines', testController.getTestsByDisciplines);
+testRouter.get('/by-teachers', testController.getTestsByTeachers);

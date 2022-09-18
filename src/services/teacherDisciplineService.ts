@@ -1,4 +1,5 @@
 import { TeacherDiscipline } from '@prisma/client';
+
 import { teacherDisciplineRepository } from '../repositories/teacherDisciplineRepository';
 import { AppError } from '../utils/AppError';
 
