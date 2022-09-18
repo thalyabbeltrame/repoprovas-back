@@ -1,14 +1,11 @@
 import Joi from 'joi';
 
-const pdfUrlRegex =
-  /^http(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?(.pdf)$/;
-
 const create = Joi.object({
   name: Joi.string().trim().required().messages({
     'any.required': 'Name is required',
     'string.empty': 'Name is not allowed to be empty',
   }),
-  pdfUrl: Joi.string().trim().regex(pdfUrlRegex).required().messages({
+  pdfUrl: Joi.string().trim().uri().required().messages({
     'any.required': 'PDF URL is required',
     'string.pattern.base': 'PDF URL is invalid',
   }),

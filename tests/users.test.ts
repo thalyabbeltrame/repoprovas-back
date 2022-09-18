@@ -7,6 +7,7 @@ import { userFactory } from './factories/userFactory';
 const client = new PrismaClient();
 
 beforeEach(async () => {
+  await client.$executeRaw`TRUNCATE TABLE tests;`;
   await client.$executeRaw`TRUNCATE TABLE users;`;
 });
 
