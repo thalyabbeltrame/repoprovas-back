@@ -10,7 +10,7 @@ async function validateCategoryId(id: number): Promise<void> {
   }
 }
 
-async function findAll(): Promise<Category[]> {
+async function findAll(): Promise<Category[] | []> {
   const categories = await categoryRepository.findAll();
   return categories;
 }

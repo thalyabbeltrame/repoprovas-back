@@ -2,7 +2,7 @@ import { Teacher } from '@prisma/client';
 
 import { prisma } from '../config/prisma';
 
-async function findAll(): Promise<Teacher[]> {
+async function findAll(): Promise<Teacher[] | []> {
   return await prisma.teacher.findMany({
     select: {
       id: true,

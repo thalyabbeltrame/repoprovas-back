@@ -2,7 +2,7 @@ import { Term } from '@prisma/client';
 
 import { prisma } from '../config/prisma';
 
-async function findAll(): Promise<Term[]> {
+async function findAll(): Promise<Term[] | []> {
   return await prisma.term.findMany({
     select: {
       id: true,

@@ -1,9 +1,9 @@
 import {
   disciplineRepository,
-  DisciplineResponse,
+  Discipline,
 } from '../repositories/disciplineRepository';
 
-async function findAll(): Promise<DisciplineResponse[]> {
+async function findAll(): Promise<Discipline[] | []> {
   const disciplines = await disciplineRepository.findAll();
   return disciplines;
 }

@@ -2,7 +2,7 @@ import { Category, Teacher, Term } from '@prisma/client';
 
 import { TestRequestDTO } from '../dtos/TestRequestDTO';
 import { Test } from '../entities/Test';
-import { DisciplineResponse } from '../repositories/disciplineRepository';
+import { Discipline } from '../repositories/disciplineRepository';
 import { testRepository } from '../repositories/testRepository';
 import { authService } from './authService';
 import { categoryService } from './categoryService';
@@ -10,6 +10,46 @@ import { disciplineService } from './disciplineService';
 import { teacherDisciplineService } from './teacherDisciplineService';
 import { teacherService } from './teacherService';
 import { termService } from './termService';
+
+interface ITestsByDisciplines {
+  id: number;
+  number: number;
+  disciplines: {
+    id: number;
+    name: string;
+    categories: {
+      id: number;
+      name: string;
+      tests: {
+        id: number;
+        name: string;
+        pdfUrl: string;
+      }[];
+    }[];
+  }[];
+}
+
+interface ITestsByTeachers {
+  id: number;
+  name: string;
+  categories: {
+    id: number;
+    name: string;
+    tests: {
+      id: number;
+      name: string;
+      pdfUrl: string;
+      discipline: {
+        id: number;
+        name: string;
+        term: {
+          id: number;
+          number: number;
+        };
+      };
+    }[];
+  }[];
+}
 
 async function create(userId: number, test: TestRequestDTO): Promise<void> {
   await authService.validateUserId(userId);
@@ -31,7 +71,9 @@ async function create(userId: number, test: TestRequestDTO): Promise<void> {
   await testRepository.create(newTest);
 }
 
-async function getByDisciplines(userId: number) {
+async function getByDisciplines(
+  userId: number
+): Promise<ITestsByDisciplines[]> {
   await authService.validateUserId(userId);
 
   const terms = await termService.findAll();
@@ -48,7 +90,7 @@ async function getByDisciplines(userId: number) {
   return formattedTests;
 }
 
-async function getByTeachers(userId: number) {
+async function getByTeachers(userId: number): Promise<ITestsByTeachers[]> {
   await authService.validateUserId(userId);
 
   const teachers = await teacherService.findAll();
@@ -61,10 +103,10 @@ async function getByTeachers(userId: number) {
 
 function formatTestsByDisciplines(
   terms: Term[],
-  disciplines: DisciplineResponse[],
+  disciplines: Discipline[],
   categories: Category[],
   tests: any[]
-) {
+): ITestsByDisciplines[] {
   const categoriesResponse = [];
   for (let i = 0; i < categories.length; i++) {
     categoriesResponse[i] = {
@@ -102,7 +144,7 @@ function formatTestsByDisciplines(
     const categoryId = test.category.id;
 
     const disciplineIdIndex = termsResponse[termId - 1].disciplines.findIndex(
-      (discipline: { id: any }) => discipline.id === disciplineId
+      (discipline: Discipline) => discipline.id === disciplineId
     );
 
     termsResponse[termId - 1].disciplines[disciplineIdIndex].categories[
@@ -125,7 +167,7 @@ function formatTestsByTeachers(
   teachers: Teacher[],
   categories: Category[],
   tests: any[]
-) {
+): ITestsByTeachers[] {
   const categoriesResponse = [];
   for (let i = 0; i < categories.length; i++) {
     categoriesResponse[i] = {

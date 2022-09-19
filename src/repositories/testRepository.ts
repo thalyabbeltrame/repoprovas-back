@@ -8,8 +8,8 @@ async function create(data: InsertTestDTO): Promise<void> {
   });
 }
 
-async function findAll(): Promise<any[]> {
-  const tests = await prisma.test.findMany({
+async function findAll(): Promise<any[] | []> {
+  return await prisma.test.findMany({
     select: {
       id: true,
       name: true,
@@ -39,8 +39,6 @@ async function findAll(): Promise<any[]> {
       },
     },
   });
-
-  return tests;
 }
 
 export const testRepository = {

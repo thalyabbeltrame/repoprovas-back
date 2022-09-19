@@ -1,6 +1,6 @@
 import { prisma } from '../config/prisma';
 
-export interface DisciplineResponse {
+export interface Discipline {
   id: number;
   name: string;
   term: {
@@ -9,7 +9,7 @@ export interface DisciplineResponse {
   };
 }
 
-async function findAll(): Promise<DisciplineResponse[]> {
+async function findAll(): Promise<Discipline[] | []> {
   return await prisma.discipline.findMany({
     select: {
       id: true,
