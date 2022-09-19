@@ -14,7 +14,7 @@ A system for sharing tests between students!
 ### Create user
 
 ```http
-POTS /users/signup
+POST /users/signup
 ```
 
 #### Request:
